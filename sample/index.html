@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>CKEditor 5 – classic editor build – development sample</title>
+    <style>
+        body {
+            max-width: 800px;
+            margin: 20px auto;
+        }
+
+        .tip-content-box {
+            width: 100%;
+            position: relative;
+            padding: 6px 10px;
+            box-sizing: border-box;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .tip-content-box:hover .close {
+            display: block;
+        }
+
+        .tip-title {
+            word-break: break-word;
+            color: #333;
+            background-color: #f7f7f7;
+            padding: .6em;
+            font-size: .75em;
+            outline-offset: -1px;
+            text-align: center;
+            /* position: absolute;
+		  top: -15px;
+		  cursor: text;
+		  left: 50%;
+		  transform: translateX(-50%); */
+        }
+
+        .edit-item-box {
+            margin: 20px 0;
+        }
+
+        .tip-content {
+            font-size: 14px;
+            cursor: text;
+        }
+
+        .close {
+            position: absolute;
+            top: -7px;
+            right: -4px;
+            width: 14px;
+            height: 14px;
+            color: white;
+            background: #ccc;
+            text-align: center;
+            line-height: 12px;
+            border-radius: 50%;
+            display: none;
+            z-index: 99;
+            cursor: pointer;
+        }
+
+        .tip-title p {
+            padding: 0 10px;
+            color: #365f93;
+            font-weight: bold;
+            transform: translateY(-15px);
+        }
+
+        .closeIcon {
+            transform: scaleX(1.2) translateX(0px) translateY(-1.5px);
+            display: inline-block;
+            font-size: 12px;
+        }
+
+        video {
+            width: 100%;
+        }
+    </style>
+
+    <script src="https://ckeditor.com/apps/ckfinder/3.5.0/ckfinder.js"></script>
+</head>
+
+<body>
+
+    <h1>CKEditor 5 – classic editor build – development sample</h1>
+
+    <div id="editor">
+        <h2>Sample</h2>
+
+        <p>This is an instance of the <a href="https://ckeditor.com/docs/ckeditor5/latest/builds/guides/overview.html#classic-editor">classic editor build</a>.</p>
+
+        <figure class="image">
+            <img src="../tests/manual/sample.jpg" alt="Autumn fields" />
+        </figure>
+
+        <p>You can use this sample to validate whether your <a href="https://ckeditor.com/docs/ckeditor5/latest/builds/guides/development/custom-builds.html">custom build</a> works fine.</p>
+    </div>
+
+
+    <div class="edit-item-box box">
+        <div class="tip-content-box">
+            <div class="close"><span class="closeIcon">x</span></div>
+            <div class="tip-content">
+                <video src="http://sp.720ku.net/upload/video/2019-06-18/3382d815-bacb-4374-afa1-e9848b605266.mp4" controls="controls"></video>
+            </div>
+            <div class="tip-title">
+                Enter video caption
+            </div>
+        </div>
+    </div>
+
+
+    <script src="../build/ckeditor.js"></script>
+
+
+    <script>
+        ClassicEditor.create(document.querySelector('#editor'), {
+
+                // Enable the CKFinder button in the toolbar.
+                //     toolbar: [ 'insertFile','mediaEmbed','link' ,'tip','imageUpload'],
+                InsertFile: {
+                    label: 'Insert file',
+                    action: '',
+                    tooltip: true,
+                    icon: '',
+                    uploadUrl: '/File/UploadFiles',
+                    baseUrl: 'http://localhost:44301'
+                },
+                mediaEmbed: {
+                    previewsInData: true,
+                    providers: [{
+                        name: 'myprovider',
+                        url: [
+                            /^.*/
+                        ],
+                        html: match => {
+                            //获取媒体url
+                            const input = match['input'];
+                            //console.log('input' + match['input']);
+                            return (
+                                '<div style="position: relative; padding-bottom: 100%; height: 0; padding-bottom: 70%;">' +
+                                `<iframe src="https://${input}" ` +
+                                'style="position: absolute; width: 100%; height: 100%; top: 0; left: 0;" ' +
+                                'frameborder="0" allowtransparency="true" allow="encrypted-media">' +
+                                '</iframe>' +
+                                '</div>'
+                            );
+                        }
+                    }]
+                }
+            })
+            .then(editor => {
+                window.editor = editor;
+                editor.editing.view.document.on('click', (evt, data) => {
+                    if (data.domTarget.className == 'closeIcon' || data.domTarget.className == 'close') {
+                        const selection = editor.model.document.selection;
+                        editor.model.document.model.deleteContent(selection)
+                    };
+                });
+
+                // editor.plugins.get( 'FileRepository' ).createUploadAdapter = ( loader ) => {
+                // 	  return new Base64UploadAdapter( loader );
+                // };
+
+            })
+            .catch(error => {
+                console.error('There was a problem initializing the editor.', error);
+            });
+    </script>
+
+</body>
+
+
+
+
+</html>
