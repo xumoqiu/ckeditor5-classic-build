@@ -47,6 +47,7 @@ import Underline from '@ckeditor/ckeditor5-basic-styles/src/underline.js';
 import WordCount from '@ckeditor/ckeditor5-word-count/src/wordcount.js';
 import Alignment from '@ckeditor/ckeditor5-alignment/src/alignment';
 import InsertFile from './insertFile/insertFile.js';
+import FullScreen from './fullScreen/fullScreen.js'
 
 
 export default class ClassicEditor extends ClassicEditorBase {}
@@ -95,7 +96,8 @@ ClassicEditor.builtinPlugins = [
     TextTransformation,
     Underline,
     WordCount,
-    InsertFile
+	InsertFile,
+	FullScreen
 ];
 
 // Editor configuration.
@@ -128,7 +130,8 @@ ClassicEditor.defaultConfig = {
             //'mediaEmbed',
             'codeBlock',
             //'ckfinder',
-            'pageBreak',
+			'pageBreak',
+			'fullScreen',
             'undo',
             'redo',
         ],
