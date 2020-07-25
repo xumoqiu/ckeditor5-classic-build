@@ -105,6 +105,8 @@
     }
   },
   "dependencies": {
+    "axios": "^0.19.2",
+    "ckeditor5-file-upload-source": "^1.0.0",
     "install": "^0.13.0",
     "jquery": "^3.5.1",
     "new": "^0.1.1",

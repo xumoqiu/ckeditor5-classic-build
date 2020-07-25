@@ -9,10 +9,7 @@
             max-width: 800px;
             margin: 20px auto;
         }
-
     </style>
-
-    <script src="https://ckeditor.com/apps/ckfinder/3.5.0/ckfinder.js"></script>
 </head>
 
 <body>
@@ -32,32 +29,26 @@
     </div>
 
 
-    <div class="edit-item-box box">
-        <div class="tip-content-box">
-            <div class="close"><span class="closeIcon">x</span></div>
-            <div class="tip-content">
-                <video src="http://sp.720ku.net/upload/video/2019-06-18/3382d815-bacb-4374-afa1-e9848b605266.mp4" controls="controls"></video>
-            </div>
-            <div class="tip-title">
-                Enter video caption
-            </div>
-        </div>
-    </div>
-
 
     <script src="../build/ckeditor.js"></script>
-
+    <!-- <script src="../src//ckeditor.js"></script> -->
 
     <script>
         ClassicEditor.create(document.querySelector('#editor'), {
 
                 // Enable the CKFinder button in the toolbar.
                 //     toolbar: [ 'insertFile','mediaEmbed','link' ,'tip','imageUpload'],
+                uploadFile: {
+                    key1: 'file',
+                    key2: 'UploadFolder',
+                    uploadUrl: '/File/UploadFiles',
+                    baseUrl: 'http://localhost:44301'
+                },
                 InsertFile: {
                     label: 'Insert file',
-                    action: function(){
+                    action: function() {
 
-					},
+                    },
                     tooltip: true,
                     icon: '',
                     uploadUrl: '/File/UploadFiles',
@@ -95,13 +86,8 @@
                     };
                 });
 
-                editor.plugins.get( 'FileRepository' ).createUploadAdapter = ( loader ) => {
-					return new Base64UploadAdapter( loader );
-				};
-				debugger;
-				editor.plugins.get( 'InsertFile' ).createUploadAdapter = ( loader ) => {
-					alert(11);
-
+                editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
+                    return new Base64UploadAdapter(loader);
                 };
 
             })
