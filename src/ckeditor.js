@@ -46,10 +46,8 @@ import TextTransformation from '@ckeditor/ckeditor5-typing/src/texttransformatio
 import Underline from '@ckeditor/ckeditor5-basic-styles/src/underline.js';
 import WordCount from '@ckeditor/ckeditor5-word-count/src/wordcount.js';
 import Alignment from '@ckeditor/ckeditor5-alignment/src/alignment';
-import InsertFile from './insertFile/insertFile.js';
-import FullScreen from './fullScreen/fullScreen.js'
-import FileUpload from 'ckeditor5-file-upload-source/src/file-upload.js'
-
+import FullScreen from './fullScreen/fullScreen.js';
+import FileUpload from './file-upload/src/file-upload.js';
 
 export default class ClassicEditor extends ClassicEditorBase {}
 
@@ -73,7 +71,7 @@ ClassicEditor.builtinPlugins = [
     Indent,
     Link,
     List,
-    MediaEmbed,
+    //MediaEmbed,
     Paragraph,
     PasteFromOffice,
     Table,
@@ -97,9 +95,8 @@ ClassicEditor.builtinPlugins = [
     TextTransformation,
     Underline,
     WordCount,
-    InsertFile,
-    FullScreen,
-    FileUpload
+	FullScreen,
+	FileUpload
 ];
 
 // Editor configuration.
@@ -128,13 +125,12 @@ ClassicEditor.defaultConfig = {
             'insertTable',
             'link',
             'imageUpload',
-            'insertFile',
-            'fileUpload',
             //'mediaEmbed',
             'codeBlock',
             //'ckfinder',
-            'pageBreak',
-            'fullScreen',
+			'pageBreak',
+			'fullScreen',
+			'fileUpload',
             'undo',
             'redo',
         ],
