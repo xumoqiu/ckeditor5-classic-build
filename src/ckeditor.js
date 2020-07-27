@@ -33,7 +33,7 @@ import Italic from '@ckeditor/ckeditor5-basic-styles/src/italic.js';
 import Link from '@ckeditor/ckeditor5-link/src/link';
 import List from '@ckeditor/ckeditor5-list/src/list';
 import MediaEmbed from '@ckeditor/ckeditor5-media-embed/src/mediaembed';
-import MediaEmbedToolbar from '@ckeditor/ckeditor5-media-embed/src/mediaembedtoolbar.js';
+//import MediaEmbedToolbar from '@ckeditor/ckeditor5-media-embed/src/mediaembedtoolbar.js';
 import PageBreak from '@ckeditor/ckeditor5-page-break/src/pagebreak.js';
 import Paragraph from '@ckeditor/ckeditor5-paragraph/src/paragraph';
 import PasteFromOffice from '@ckeditor/ckeditor5-paste-from-office/src/pastefromoffice';
@@ -71,14 +71,14 @@ ClassicEditor.builtinPlugins = [
     Indent,
     Link,
     List,
-    //MediaEmbed,
+    MediaEmbed,
     Paragraph,
     PasteFromOffice,
     Table,
     TableToolbar,
     TextTransformation,
     Alignment,
-    MediaEmbedToolbar,
+    // MediaEmbedToolbar,
     TableCellProperties,
     TableProperties,
     Code,
@@ -95,8 +95,8 @@ ClassicEditor.builtinPlugins = [
     TextTransformation,
     Underline,
     WordCount,
-	FullScreen,
-	FileUpload
+    FullScreen,
+    FileUpload
 ];
 
 // Editor configuration.
@@ -125,12 +125,12 @@ ClassicEditor.defaultConfig = {
             'insertTable',
             'link',
             'imageUpload',
-            //'mediaEmbed',
+            'fileUpload',
+            'mediaEmbed',
             'codeBlock',
             //'ckfinder',
-			'pageBreak',
-			'fullScreen',
-			'fileUpload',
+            'pageBreak',
+            'fullScreen',
             'undo',
             'redo',
         ],
