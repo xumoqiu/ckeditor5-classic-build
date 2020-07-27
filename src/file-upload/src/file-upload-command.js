@@ -1,5 +1,5 @@
 import Command from '@ckeditor/ckeditor5-core/src/command';
-// import axios from 'axios';
+import axios from 'axios';
 
 export default class InsertSjkFileUploadEditorCommand extends Command {
     execute() {
@@ -32,11 +32,11 @@ function changeUploadInput(e, that, editor) {
     const name = this.files[0].name;
     const ext = this.files[0].name.substring(this.files[0].name.lastIndexOf('.') + 1, this.files[0].name.length).toLocaleLowerCase();
     const size = this.files[0].size / 1024 / 1024;
-    if (!ext.match(/zip|rar|7z|pdf|ppt|pptx|csv|xls|xlsx|doc|docx/)) {
+    if (!ext.match(/zip|rar|7z|pdf|ppt|pptx|csv|xls|xlsx|doc|docx|mp4/)) {
         createWarningMessageEle('The supported file format is zip/rar/7z/pdf/ppt/pptx/csv/xls/xlsx/doc/docx/mp4');
         return false;
     }
-    if (size > 50) {
+    if (size > 500) {
         createWarningMessageEle('File size can not exceed 500MB');
         return false;
     }
@@ -58,41 +58,56 @@ function changeUploadInput(e, that, editor) {
  * 发送二进制流给后台
  */
 function sendData(baseUrl, uploadUrl, args, callback, editor) {
-    let request = new Request(baseUrl + uploadUrl, {
-        body: args.params || {}, // *default, no-cache, reload, force-cache, only-if-cached
-        // credentials: 'include', // include, same-origin, *omit
-        method: 'POST', // *GET, POST, PUT, DELETE, etc.
-        mode: 'cors' // no-cors, cors, *same-origin
+    // let request = new Request(baseUrl + uploadUrl, {
+    //     body: args.params || {}, // *default, no-cache, reload, force-cache, only-if-cached
+    //     // credentials: 'include', // include, same-origin, *omit
+    //     method: 'POST', // *GET, POST, PUT, DELETE, etc.
+    //     mode: 'cors' // no-cors, cors, *same-origin
+    // });
+
+
+    // fetch(request)
+    //     .then((data) => {
+    //         return data.json();
+    //     })
+    //     .then((value) => {
+    //         if (value.success) {
+    //             callback(value, baseUrl, editor);
+    //         } else {
+    //             createWarningMessageEle(value.error);
+    //         }
+    //     })
+    //     .catch((e) => {
+    //         createWarningMessageEle(e)
+    //     })
+
+    var loadingDiv = document.createElement('div');
+    loadingDiv.id = 'ckeditorWarningMessage';
+    document.body.appendChild(loadingDiv);
+
+
+    axios({
+        url: baseUrl + uploadUrl,
+        method: 'post',
+        data: args.params,
+        headers: {
+            //'Authorization': 'Bearer ' + abp.auth.getToken(), // 此处为你定义的token 值(Bearer token 接口认证方式)
+            'Content-Type': 'multipart/form-data',
+        },
+        transformRequest: [function(data) {
+            return data
+        }],
+        onUploadProgress: progressEvent => {
+            let complete = (progressEvent.loaded / progressEvent.total * 100 | 0) + '%'
+            loadingDiv.innerText = 'Uploading ：' + complete;
+        }
+    }).then(res => {
+        callback(res.data, baseUrl, editor)
+        loadingDiv.remove();
+    }).catch(error => {
+        loadingDiv.remove();
+        createWarningMessageEle(error);
     });
-
-
-    fetch(request)
-        .then((data) => {
-            return data.json();
-        })
-        .then((value) => {
-            if (value.success) {
-                callback(value, baseUrl, editor);
-            } else {
-                createWarningMessageEle(value.error);
-            }
-        })
-        .catch((e) => {
-            createWarningMessageEle(e)
-        })
-        // axios({
-        //     url: url1 + url2,
-        //     method: 'post',
-        //     data: args.params,
-        //     headers: {
-        //         //'Authorization': 'Bearer ' + abp.auth.getToken(), // 此处为你定义的token 值(Bearer token 接口认证方式)
-        //         'Content-Type': 'multipart/form-data',
-        //     },
-        // }).then(res => {
-        //     callback(res, url1, editor)
-        // }).catch(error => {
-        //     createWarningMessageEle(error);
-        // });
 
     // const res = {
     //     url: 'https://www.baidu.com',
@@ -136,9 +151,10 @@ function createWarningMessageEle(data) {
     div.id = 'ckeditorWarningMessage';
     div.innerText = data;
     document.body.appendChild(div);
+
     setTimeout(() => {
         div.remove();
-    }, 10000);
+    }, 3000);
 }
 /**
  *
