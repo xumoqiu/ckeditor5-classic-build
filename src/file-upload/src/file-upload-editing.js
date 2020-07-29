@@ -18,7 +18,7 @@ export default class fileUploadEditing extends Plugin {
 
         this._defineSchema();
         this._defineConverters();
-        // this._addDownloadListener();
+        this._addDownloadListener();
         this.editor.commands.add('insertFileUploadBox', new InsertSjkFileUploadEditorCommand(this.editor));
     }
 

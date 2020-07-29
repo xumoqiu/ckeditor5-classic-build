@@ -1,24 +1,7 @@
-/*
- * Copyright (c) 2003-2019, CKSource - Frederico Knabben. All rights reserved.
- * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
- */
-
-.loadingEle{
-	background-color: red;
-	height: 20px;
+.s-attachment {
+    padding: 5px 0px;
 }
 
-.s-attachment{
-	display: flex;
-	flex-direction: row;
-	flex-wrap: nowrap;
-	justify-content: space-between;
-	padding: 5px 0px;
-}
-
-.s-name{
-    color: #da3abf;
-	font-size: 14px;
-	cursor: pointer;
-	text-decoration: underline;
+.s-name {
+    font-size: 14px;
 }

@@ -81,10 +81,24 @@ function sendData(baseUrl, uploadUrl, args, callback, editor) {
     //         createWarningMessageEle(e)
     //     })
 
+
+
+    var containerDiv = document.createElement('div');
+    containerDiv.id = 'ckeditorWarningMessageContainer';
     var loadingDiv = document.createElement('div');
     loadingDiv.id = 'ckeditorWarningMessage';
-    document.body.appendChild(loadingDiv);
+    containerDiv.appendChild(loadingDiv);
 
+
+    const cc = document.getElementsByClassName('ck-editor__main');
+
+    cc[0].prepend(containerDiv);
+
+    //document.body.appendChild(containerDiv);
+
+
+
+    //ck
 
     axios({
         url: baseUrl + uploadUrl,
@@ -103,9 +117,9 @@ function sendData(baseUrl, uploadUrl, args, callback, editor) {
         }
     }).then(res => {
         callback(res.data, baseUrl, editor)
-        loadingDiv.remove();
+        containerDiv.remove();
     }).catch(error => {
-        loadingDiv.remove();
+        containerDiv.remove();
         createWarningMessageEle(error);
     });
 
@@ -147,14 +161,27 @@ function createsjkFileUploadEditor(writer, data, baseUrl) {
 // errorAlert
 function createWarningMessageEle(data) {
 
-    var div = document.createElement('div');
-    div.id = 'ckeditorWarningMessage';
-    div.innerText = data;
-    document.body.appendChild(div);
 
-    setTimeout(() => {
-        div.remove();
-    }, 3000);
+    var containerDiv = document.createElement('div');
+    containerDiv.id = 'ckeditorWarningMessageContainer';
+
+    var loadingDiv = document.createElement('div');
+    loadingDiv.id = 'ckeditorWarningMessage';
+
+    containerDiv.appendChild(loadingDiv);
+    document.body.appendChild(containerDiv);
+
+    loadingDiv.innerText = data;
+    //document.body.appendChild(containerDiv);
+
+
+    const cc = document.getElementsByClassName('ck-editor__main');
+
+    cc[0].prepend(containerDiv);
+
+    // setTimeout(() => {
+    //     containerDiv.remove();
+    // }, 3000);
 }
 /**
  *
