@@ -169,7 +169,7 @@ function createWarningMessageEle(data) {
     loadingDiv.id = 'ckeditorWarningMessage';
 
     containerDiv.appendChild(loadingDiv);
-    document.body.appendChild(containerDiv);
+    //document.body.appendChild(containerDiv);
 
     loadingDiv.innerText = data;
     //document.body.appendChild(containerDiv);
@@ -179,9 +179,9 @@ function createWarningMessageEle(data) {
 
     cc[0].prepend(containerDiv);
 
-    // setTimeout(() => {
-    //     containerDiv.remove();
-    // }, 3000);
+    setTimeout(() => {
+        containerDiv.remove();
+    }, 3000);
 }
 /**
  *
