@@ -18,8 +18,6 @@ export default class InsertSjkFileUploadEditorCommand extends Command {
         const model = this.editor.model;
         const selection = model.document.selection;
         const allowedIn = model.schema.findAllowedParent(selection.getFirstPosition(), 'sjk-attachment');
-
-
         this.isEnabled = allowedIn !== null;
     }
 }
@@ -51,54 +49,23 @@ function changeUploadInput(e, that, editor) {
         params: form,
         fileName: name,
         fileSize: size
-    }, insertFile, editor)
+    }, insertFile, editor);
 }
 /**
  *
  * 发送二进制流给后台
  */
 function sendData(baseUrl, uploadUrl, args, callback, editor) {
-    // let request = new Request(baseUrl + uploadUrl, {
-    //     body: args.params || {}, // *default, no-cache, reload, force-cache, only-if-cached
-    //     // credentials: 'include', // include, same-origin, *omit
-    //     method: 'POST', // *GET, POST, PUT, DELETE, etc.
-    //     mode: 'cors' // no-cors, cors, *same-origin
-    // });
-
-
-    // fetch(request)
-    //     .then((data) => {
-    //         return data.json();
-    //     })
-    //     .then((value) => {
-    //         if (value.success) {
-    //             callback(value, baseUrl, editor);
-    //         } else {
-    //             createWarningMessageEle(value.error);
-    //         }
-    //     })
-    //     .catch((e) => {
-    //         createWarningMessageEle(e)
-    //     })
-
-
-
     var containerDiv = document.createElement('div');
     containerDiv.id = 'ckeditorWarningMessageContainer';
     var loadingDiv = document.createElement('div');
     loadingDiv.id = 'ckeditorWarningMessage';
+    loadingDiv.innerText = 'Uploading';
     containerDiv.appendChild(loadingDiv);
+    const refNode = document.getElementsByClassName('ck-content')[0];
+    const parentNode = document.getElementsByClassName('ck-editor__main')[0];
 
-
-    const cc = document.getElementsByClassName('ck-editor__main');
-
-    cc[0].prepend(containerDiv);
-
-    //document.body.appendChild(containerDiv);
-
-
-
-    //ck
+    parentNode.insertBefore(containerDiv, refNode);
 
     axios({
         url: baseUrl + uploadUrl,
@@ -122,63 +89,43 @@ function sendData(baseUrl, uploadUrl, args, callback, editor) {
         containerDiv.remove();
         createWarningMessageEle(error);
     });
-
-    // const res = {
-    //     url: 'https://www.baidu.com',
-    //     name: args.fileName
-    // };
-
-    // callback(res, baseUrl, editor)
-
 }
 
 
 function createsjkFileUploadEditor(writer, data, baseUrl) {
-
     const box = writer.createElement('sjk-attachment', {
         attr_href: baseUrl + data.result[0].filePath,
-        href: baseUrl + data.result[0].filePath,
-        name: data.result[0].fileName,
-        size: 1000,
         attr_name: data.result[0].fileName,
-        attr_size: 1000
-    });
-
-    const name = writer.createElement('sjk-name', {
+        attr_size: data.result[0].fileSize,
         href: baseUrl + data.result[0].filePath,
         name: data.result[0].fileName,
-        target: '_blank'
+        size: data.result[0].fileSize
     });
-
-    writer.insertText(data.result[0].fileName, writer.createPositionAt(name, 0));
-    writer.append(name, box);
-
+    const aTarget = writer.createElement('sjk-name', {
+        href: baseUrl + data.result[0].filePath,
+        name: data.result[0].fileName,
+        target: '_blank',
+        download: baseUrl + data.result[0].filePath
+    });
+    //writer.insertText(data.result[0].fileName, writer.createPositionAt(name, 0));
+    writer.append(aTarget, box);
     return box;
-
 }
 
 
 // errorAlert
 function createWarningMessageEle(data) {
-
-
     var containerDiv = document.createElement('div');
     containerDiv.id = 'ckeditorWarningMessageContainer';
-
     var loadingDiv = document.createElement('div');
     loadingDiv.id = 'ckeditorWarningMessage';
-
     containerDiv.appendChild(loadingDiv);
-    //document.body.appendChild(containerDiv);
-
     loadingDiv.innerText = data;
-    //document.body.appendChild(containerDiv);
 
+    const refNode = document.getElementsByClassName('ck-content')[0];
+    const parentNode = document.getElementsByClassName('ck-editor__main')[0];
 
-    const cc = document.getElementsByClassName('ck-editor__main');
-
-    cc[0].prepend(containerDiv);
-
+    parentNode.insertBefore(containerDiv, refNode);
     setTimeout(() => {
         containerDiv.remove();
     }, 3000);

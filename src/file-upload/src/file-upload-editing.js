@@ -18,25 +18,25 @@ export default class fileUploadEditing extends Plugin {
 
         this._defineSchema();
         this._defineConverters();
-        this._addDownloadListener();
+        //this._addDownloadListener();
         this.editor.commands.add('insertFileUploadBox', new InsertSjkFileUploadEditorCommand(this.editor));
     }
 
 
     // 文件下载框点击事件
-    _addDownloadListener() {
-        document.addEventListener('click', (e) => {
-            if (e.target.getAttribute('class') === 's-name') {
+    // _addDownloadListener() {
+    //     document.addEventListener('click', (e) => {
+    //         if (e.target.getAttribute('class') === 's-name') {
 
-                var a = document.createElement('a');
-                a.href = e.target.getAttribute('href');
-                a.target = '_blank';
-                a.click();
-            } else {
-                return false;
-            }
-        });
-    }
+    //             var a = document.createElement('a');
+    //             a.href = e.target.getAttribute('href');
+    //             a.target = '_blank';
+    //             a.click();
+    //         } else {
+    //             return false;
+    //         }
+    //     });
+    // }
 
     _defineSchema() {
         const schema = this.editor.model.schema;
@@ -51,7 +51,7 @@ export default class fileUploadEditing extends Plugin {
         schema.register('sjk-name', {
             allowWhere: '$block',
             isLimit: true,
-            allowAttributes: ['href', 'name', 'target'],
+            allowAttributes: ['href', 'name', 'target', 'download'],
             allowIn: 'sjk-attachment',
         });
     }
@@ -113,7 +113,19 @@ export default class fileUploadEditing extends Plugin {
                 model: 'sjk-name',
                 view: (modelItem, writer) => {
                     const href = modelItem._attrs.get('href');
-                    return writer.createContainerElement('a', { class: 's-name', href: href, target: '_blank' });
+                    const name = modelItem._attrs.get('name');
+                    const aTarget = writer.createContainerElement('a', {
+                        class: 's-name',
+                        href: href,
+                        target: '_blank',
+                        download: href,
+                        name: name
+                    });
+
+                    const textNode = writer.createText(name);
+
+                    writer.insert(writer.createPositionAt(aTarget, 0), textNode);
+                    return aTarget;
                 }
             });
 
@@ -122,11 +134,18 @@ export default class fileUploadEditing extends Plugin {
                 model: 'sjk-name',
                 view: (modelItem, writer) => {
                     const href = modelItem._attrs.get('href');
-                    return writer.createContainerElement('a', {
+                    const name = modelItem._attrs.get('name');
+                    const aTarget = writer.createContainerElement('a', {
                         class: 's-name',
                         href: href,
-                        target: '_blank'
+                        target: '_blank',
+                        download: href,
+                        name: name
                     });
+                    const textNode = writer.createText(name);
+
+                    writer.insert(writer.createPositionAt(aTarget, 0), textNode);
+                    return aTarget;
                 }
             });
 
@@ -136,8 +155,14 @@ export default class fileUploadEditing extends Plugin {
             view: (modelItem, writer) => {
 
                 const href = modelItem._attrs.get('href');
-
-                return writer.createContainerElement('a', { class: 's-name', href: href, target: '_blank' });
+                const name = modelItem._attrs.get('name');
+                return writer.createContainerElement('a', {
+                    class: 's-name',
+                    href: href,
+                    target: '_blank',
+                    download: href,
+                    name: name
+                });
             }
         });
 
@@ -146,16 +171,33 @@ export default class fileUploadEditing extends Plugin {
             view: {
                 name: 'a',
                 classes: 's-name'
-                    // attributes: {
-                    //     href: '',
-                    //     target: '_blank'
-                    // }
             },
             model: (viewElement, modelWriter) => {
-                return modelWriter.createElement('sjk-name', {
-                    href: viewElement._children[0].getAttribute('href') || '',
-                    target: '_blank'
+
+
+                const aTarget = modelWriter.createElement('sjk-name', {
+                    href: viewElement._attrs.get('href') || '',
+                    name: viewElement._attrs.get('name') || '',
+                    target: '_blank',
+                    download: viewElement._attrs.get('href') || ''
                 });
+
+                return aTarget;
+
+                // const href = viewElement._attrs.get('href') || '';
+                // const name = viewElement._attrs.get('name') || '';
+
+
+                // const aTarget = modelWriter.createContainerElement('a', {
+                //     class: 's-name',
+                //     href: href,
+                //     target: '_blank',
+                //     download: href,
+                //     name: name
+                // });
+
+                // modelWriter.insertText(viewElement._attrs.get('name'), modelWriter.createPositionAt(aTarget, 0));
+                return aTarget;
             }
         });
     };

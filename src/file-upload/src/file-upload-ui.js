@@ -1,15 +1,5 @@
-/**
- * @license Copyright (c) 2003-2018, CKSource - Frederico Knabben. All rights reserved.
- * For licensing, see LICENSE.md.
- */
-
-/**
- * @module fileUpload/fileUploadUI
- */
-
 import Plugin from '@ckeditor/ckeditor5-core/src/plugin';
 import ButtonView from '@ckeditor/ckeditor5-ui/src/button/buttonview';
-// import Model from '@ckeditor/ckeditor5-ui/src/model';
 import relFileIcon from './relFile.svg';
 
 export default class fileUploadUI extends Plugin {
@@ -24,7 +14,7 @@ export default class fileUploadUI extends Plugin {
         nowStyle.innerText = styles;
         document.body.appendChild(nowStyle);
         const editor = this.editor;
-        // Setup `imageUpload` button.
+
         editor.ui.componentFactory.add('fileUpload', locale => {
             const button = new ButtonView(locale);
             button.set({
@@ -35,18 +25,9 @@ export default class fileUploadUI extends Plugin {
                 icon: relFileIcon,
                 isEnabled: true
             });
-
-            // Show the panel on button click.
-            // this.listenTo(button, 'execute', () => {
-            // 	editor.model.change(writer => {
-            // 		editor.execute('insertFileUploadBox')
-            // 	});
-            // });
-
             this.listenTo(button, 'execute', () =>
                 editor.execute('insertFileUploadBox')
             );
-
             return button;
         });
     }
