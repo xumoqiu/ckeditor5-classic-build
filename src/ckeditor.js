@@ -46,6 +46,8 @@ import TextTransformation from '@ckeditor/ckeditor5-typing/src/texttransformatio
 import Underline from '@ckeditor/ckeditor5-basic-styles/src/underline.js';
 import WordCount from '@ckeditor/ckeditor5-word-count/src/wordcount.js';
 import Alignment from '@ckeditor/ckeditor5-alignment/src/alignment';
+import RemoveFormat from '@ckeditor/ckeditor5-remove-format/src/removeformat';
+import FormatPainter from './format-painter/src/format-painter.js';
 import FullScreen from './fullScreen/fullScreen.js';
 import FileUpload from './file-upload/src/file-upload.js';
 
@@ -95,6 +97,8 @@ ClassicEditor.builtinPlugins = [
 	TextTransformation,
 	Underline,
 	WordCount,
+	RemoveFormat,
+	FormatPainter,
 	FullScreen,
 	FileUpload
 ];
@@ -110,6 +114,8 @@ ClassicEditor.defaultConfig = {
 			'fontFamily',
 			'fontColor',
 			'fontBackgroundColor',
+			'removeFormat',
+			'formatPainter',
 			'|',
 			'highlight',
 			'blockQuote',
@@ -162,6 +168,21 @@ ClassicEditor.defaultConfig = {
 			'tableProperties',
 			'tableCellProperties'
 		]
+	},
+	fontSize: {
+		options: [
+			9,
+			11,
+			13,
+			'default',
+			17,
+			19,
+			21,
+			24,
+			28,
+			32
+		],
+		supportAllValues: true
 	},
 	language: 'en'
 };

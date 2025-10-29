@@ -1,0 +1,15 @@
+/**
+ * @license Copyright (c) 2003-2020, CKSource - Frederico Knabben. All rights reserved.
+ * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
+ */
+
+/* Format Painter button styles */
+.ck.ck-button.ck-on.format-painter {
+	background-color: hsl(199, 92%, 94%);
+	border-color: hsl(201, 98%, 30%);
+}
+
+.ck-content .format-painter-active {
+	cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><path d="M15.5 3.5h-11a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1zm-10 3v-2h9v2h-9zM10 10.5h-.5v5.5a1 1 0 0 1-1 1h-1a1 1 0 0 1-1-1v-5.5H6a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5z"/></svg>') 0 20, pointer;
+}
+
