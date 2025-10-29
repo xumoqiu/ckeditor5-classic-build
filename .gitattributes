@@ -1,18 +1,19 @@
-*			text=auto
+# Auto detect text files and perform LF normalization
+* text=auto eol=lf
 
-*.htaccess	eol=lf
-*.cgi		eol=lf
-*.sh		eol=lf
+# Explicitly declare text files you want to always be normalized and converted to native line endings on checkout.
+*.js text eol=lf
+*.ts text eol=lf
+*.css text eol=lf
+*.json text eol=lf
+*.md text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
 
-*.css		text
-*.htm		text
-*.html		text
-*.js		text
-*.json		text
-*.php		text
-*.txt		text
-*.md		text
-
-*.png		-text
-*.gif		-text
-*.jpg		-text
+# Denote all files that are truly binary and should not be modified.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.svg binary

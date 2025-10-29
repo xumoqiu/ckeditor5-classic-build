@@ -33,7 +33,7 @@ import Italic from '@ckeditor/ckeditor5-basic-styles/src/italic.js';
 import Link from '@ckeditor/ckeditor5-link/src/link';
 import List from '@ckeditor/ckeditor5-list/src/list';
 import MediaEmbed from '@ckeditor/ckeditor5-media-embed/src/mediaembed';
-//import MediaEmbedToolbar from '@ckeditor/ckeditor5-media-embed/src/mediaembedtoolbar.js';
+// import MediaEmbedToolbar from '@ckeditor/ckeditor5-media-embed/src/mediaembedtoolbar.js';
 import PageBreak from '@ckeditor/ckeditor5-page-break/src/pagebreak.js';
 import Paragraph from '@ckeditor/ckeditor5-paragraph/src/paragraph';
 import PasteFromOffice from '@ckeditor/ckeditor5-paste-from-office/src/pastefromoffice';
@@ -53,115 +53,115 @@ export default class ClassicEditor extends ClassicEditorBase {}
 
 // Plugins to include in the build.
 ClassicEditor.builtinPlugins = [
-    Essentials,
-    UploadAdapter,
-    Autoformat,
-    Bold,
-    Italic,
-    BlockQuote,
-    CKFinder,
-    EasyImage,
-    Heading,
-    Image,
-    ImageCaption,
-    ImageStyle,
-    ImageToolbar,
-    ImageUpload,
-    ImageResize,
-    Indent,
-    Link,
-    List,
-    MediaEmbed,
-    Paragraph,
-    PasteFromOffice,
-    Table,
-    TableToolbar,
-    TextTransformation,
-    Alignment,
-    // MediaEmbedToolbar,
-    TableCellProperties,
-    TableProperties,
-    Code,
-    CodeBlock,
-    ExportToPDF,
-    FontBackgroundColor,
-    FontColor,
-    FontFamily,
-    FontSize,
-    Highlight,
-    HorizontalLine,
-    PageBreak,
-    StandardEditingMode,
-    TextTransformation,
-    Underline,
-    WordCount,
-    FullScreen,
-    FileUpload
+	Essentials,
+	UploadAdapter,
+	Autoformat,
+	Bold,
+	Italic,
+	BlockQuote,
+	CKFinder,
+	EasyImage,
+	Heading,
+	Image,
+	ImageCaption,
+	ImageStyle,
+	ImageToolbar,
+	ImageUpload,
+	ImageResize,
+	Indent,
+	Link,
+	List,
+	MediaEmbed,
+	Paragraph,
+	PasteFromOffice,
+	Table,
+	TableToolbar,
+	TextTransformation,
+	Alignment,
+	// MediaEmbedToolbar,
+	TableCellProperties,
+	TableProperties,
+	Code,
+	CodeBlock,
+	ExportToPDF,
+	FontBackgroundColor,
+	FontColor,
+	FontFamily,
+	FontSize,
+	Highlight,
+	HorizontalLine,
+	PageBreak,
+	StandardEditingMode,
+	TextTransformation,
+	Underline,
+	WordCount,
+	FullScreen,
+	FileUpload
 ];
 
 // Editor configuration.
 ClassicEditor.defaultConfig = {
-    toolbar: {
-        items: [
-            'heading',
-            'bold',
-            'italic',
-            'fontSize',
-            'fontFamily',
-            'fontColor',
-            'fontBackgroundColor',
-            '|',
-            'highlight',
-            'blockQuote',
-            'underline',
-            'alignment',
-            'indent',
-            'outdent',
-            '|',
-            'bulletedList',
-            'numberedList',
-            '|',
-            'exportPdf',
-            'insertTable',
-            'link',
-            'imageUpload',
-            'fileUpload',
-            'mediaEmbed',
-            'codeBlock',
-            //'ckfinder',
-            'pageBreak',
-            'fullScreen',
-            'undo',
-            'redo',
-        ],
-        shouldNotGroupWhenFull: true
-    },
-    image: {
-        toolbar: [
-            'imageTextAlternative',
-            '|',
-            'imageStyle:full',
-            'imageStyle:alignLeft',
-            'imageStyle:alignCenter',
-            'imageStyle:alignRight'
+	toolbar: {
+		items: [
+			'heading',
+			'bold',
+			'italic',
+			'fontSize',
+			'fontFamily',
+			'fontColor',
+			'fontBackgroundColor',
+			'|',
+			'highlight',
+			'blockQuote',
+			'underline',
+			'alignment',
+			'indent',
+			'outdent',
+			'|',
+			'bulletedList',
+			'numberedList',
+			'|',
+			'exportPdf',
+			'insertTable',
+			'link',
+			'imageUpload',
+			'fileUpload',
+			'mediaEmbed',
+			'codeBlock',
+			// 'ckfinder',
+			'pageBreak',
+			'fullScreen',
+			'undo',
+			'redo'
+		],
+		shouldNotGroupWhenFull: true
+	},
+	image: {
+		toolbar: [
+			'imageTextAlternative',
+			'|',
+			'imageStyle:full',
+			'imageStyle:alignLeft',
+			'imageStyle:alignCenter',
+			'imageStyle:alignRight'
 
-        ],
-        styles: [
-            // This option is equal to a situation where no style is applied.
-            'full',
-            'alignLeft',
-            'alignRight',
-            'alignCenter'
-        ]
-    },
-    table: {
-        contentToolbar: [
-            'tableColumn',
-            'tableRow',
-            'mergeTableCells',
-            'tableProperties',
-            'tableCellProperties'
-        ]
-    },
-    language: 'en'
+		],
+		styles: [
+			// This option is equal to a situation where no style is applied.
+			'full',
+			'alignLeft',
+			'alignRight',
+			'alignCenter'
+		]
+	},
+	table: {
+		contentToolbar: [
+			'tableColumn',
+			'tableRow',
+			'mergeTableCells',
+			'tableProperties',
+			'tableCellProperties'
+		]
+	},
+	language: 'en'
 };

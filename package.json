@@ -56,6 +56,7 @@
     "@ckeditor/ckeditor5-theme-lark": "^20.0.0",
     "@ckeditor/ckeditor5-typing": "^20.0.0",
     "@ckeditor/ckeditor5-word-count": "^20.0.0",
+    "@ckeditor/ckeditor5-remove-format": "^20.0.0",
     "eslint": "^7.4.0",
     "eslint-config-ckeditor5": "^3.0.0",
     "husky": "^4.2.5",
@@ -83,8 +84,8 @@
   },
   "scripts": {
     "build": "webpack --mode production",
-    "lint": "eslint --quiet '**/*.js'",
-    "stylelint": "stylelint --quiet --allow-empty-input 'theme/**/*.css' 'docs/**/*.css'",
+    "lint": "eslint --quiet \"**/*.js\"",
+    "stylelint": "stylelint --quiet --allow-empty-input \"theme/**/*.css\" \"docs/**/*.css\"",
     "preversion": "npm run build; if [ -n \"$(git status src/ckeditor.js build/ --porcelain)\" ]; then git add -u src/ckeditor.js build/ && git commit -m 'Internal: Build.'; fi"
   },
   "lint-staged": {
