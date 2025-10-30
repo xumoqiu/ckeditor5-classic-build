@@ -56,34 +56,61 @@ export default class FormatPainterCommand extends Command {
 		];
 
 		try {
-			// 方法1: 直接从选区获取属性（最安全的方式）
+			// 方法1: 直接从选区获取属性（这是获取格式最可靠的方法）
 			for ( const attrName of attributesToCopy ) {
 				if ( selection.hasAttribute( attrName ) ) {
-					this.copiedAttributes.set( attrName, selection.getAttribute( attrName ) );
+					const attrValue = selection.getAttribute( attrName );
+					this.copiedAttributes.set( attrName, attrValue );
 				}
 			}
 
-			// 方法2: 如果选区没有直接属性，使用walker安全遍历
+			// 方法2: 如果方法1没有获取到，从选区的第一个位置获取属性
 			if ( this.copiedAttributes.size === 0 ) {
 				const firstRange = selection.getFirstRange();
-				const walker = firstRange.getWalker( {
-					ignoreElementEnd: true,
-					shallow: true
-				} );
+				const startPosition = firstRange.start;
 
-				for ( const { item } of walker ) {
-					// 只处理文本节点
-					if ( item.is( '$textProxy' ) || item.is( '$text' ) ) {
+				// 获取位置前面的节点属性
+				const nodeBefore = startPosition.nodeBefore;
+				const nodeAfter = startPosition.nodeAfter;
+
+				// 尝试从 nodeBefore 获取
+				if ( nodeBefore ) {
+					for ( const attrName of attributesToCopy ) {
+						if ( nodeBefore.hasAttribute && nodeBefore.hasAttribute( attrName ) ) {
+							this.copiedAttributes.set( attrName, nodeBefore.getAttribute( attrName ) );
+						}
+					}
+				}
+
+				// 如果还是没有，尝试从 nodeAfter 获取
+				if ( this.copiedAttributes.size === 0 && nodeAfter ) {
+					for ( const attrName of attributesToCopy ) {
+						if ( nodeAfter.hasAttribute && nodeAfter.hasAttribute( attrName ) ) {
+							this.copiedAttributes.set( attrName, nodeAfter.getAttribute( attrName ) );
+						}
+					}
+				}
+			}
+
+			// 方法3: 使用 walker 遍历
+			if ( this.copiedAttributes.size === 0 ) {
+				const firstRange = selection.getFirstRange();
+
+				for ( const value of firstRange.getWalker( { ignoreElementEnd: true } ) ) {
+					const item = value.item;
+
+					// 处理文本节点
+					if ( item.is && ( item.is( '$textProxy' ) || item.is( '$text' ) ) ) {
 						for ( const attrName of attributesToCopy ) {
 							if ( item.hasAttribute( attrName ) && !this.copiedAttributes.has( attrName ) ) {
 								this.copiedAttributes.set( attrName, item.getAttribute( attrName ) );
 							}
 						}
+					}
 
-						// 找到第一个有属性的文本节点就停止
-						if ( this.copiedAttributes.size > 0 ) {
-							break;
-						}
+					// 如果已经找到了属性，就停止查找
+					if ( this.copiedAttributes.size > 0 ) {
+						break;
 					}
 				}
 			}
